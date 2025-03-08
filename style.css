@@ -10,15 +10,6 @@ h1 {
     color: red;
 }
 
-@media only screen and (max-width: 600px) {
-    
-    h1 {
-        padding-left: 2em;
-        padding-right: 2em;
-    }
-
-}
-
 p {
     color: #07e800;
     font-size: 1.5em;
