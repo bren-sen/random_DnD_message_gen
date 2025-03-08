@@ -1,23 +1,22 @@
+//sentence structure "Hello traveller, you just arrived BLANK (place), were you meet BLANK (creature). You take your BLANK (item) to BLANK (verb) them. BLANK (action result)!
 
-//sentence structure "Hello traveller, you just arrived BLANK (location), were you meet BLANK (creature). You take your BLANK (item) to BLANK (verb) them. Result
-
-//generate random number to be multiplied by num (to be set to lenght of array/object)
+//generate random number to be multiplied by num (length of array/object)
 const randomNumber = (num) => {
     return Math.floor(Math.random() * num);
 };
 
-//create arrays/objects with filler words
-const sourceLocations = "at the prancing pony inn, in a blighted village, at a toll bridge, at the entrence of a fortified village, in an abandonned cemetery, on top of the wizard's tower, at the source of the mighty river, at the edge of the known land, in a elegant castle's garden, in a hut in the middle of nowhere, in the ancient elvic forrest, in an abandonned dwarves' mine, at the top of a mostly inactive volcanoe, in the middle of a battelfied, in a cosy little farmhouse, in the sewer of the city, at the entrence of the isolated monastry, at the sacred shrine of the deer god";
-const locationsArray = sourceLocations.split(", ");
+//create arrays/objects with filler words, more words can be added in sources const (put a comma and a space in front of each added word)
+const sourcePlaces = "at the prancing pony inn, in a blighted village, at a toll bridge, at the entrence of a fortified village, in an abandonned cemetery, on top of the wizard's tower, at the source of the mighty river, at the edge of the known land, in a elegant castle's garden, in a hut in the middle of nowhere, in the ancient elvic forrest, in an abandonned dwarves' mine, at the top of a mostly inactive volcanoe, in the middle of a battelfied, in a cosy little farmhouse, in the sewer of the city, at the entrence of the isolated monastry, at the sacred shrine of the deer god";
+const placesArray = sourcePlaces.split(", ");
 
 const sourceCreatures = "a blind raven, an owlbear, a shapeshifting pony, a bunch of drunk gnomes, a horde of goblins, the god of moldy food, three sleeping trolls, a baby warg, a knight in a rusty looking armor, bandits carrying a sturdy chest, a druid and a badger talking to each other, a few city guards, a damsel in distress, an ancient black dragon sleeping peacefully, the daugther of the innkeeper, the witch who has been terrorising the locals, an harmless looking chest and definitely not a mimic, cows grazing peacefully, two giants arguing, the princess, a bard, a monk";
 const creaturesArray = sourceCreatures.split(", ");
 
-const sourceBadItems = "sword, hallebard, longbow, crossbow, dagger, two-handed axe, sling, longsword, whip, morningstar, scimitar, warhammer, cast iron pan, fists, trumpet, broken knife, old bone, bottle of ale, wooden staff, scroll of titan summoning, flask of holy water";
+const sourceBadItems = "sword, hallebard, longbow, crossbow, dagger, two-handed axe, sling, longsword, whip, morningstar, scimitar, warhammer, cast iron pan, fists, old bone, bottle of ale, wooden staff, scroll of titan summoning, flask of holy water, wooden stake, drow poison";
 const badItemsArray = sourceBadItems.split(", ");
-const sourceGoodItems = "arcane grimoire, rose flower, scroll of protection, immovable rod, bagpipes, delicious looking red apple, lyre, gold coins, glassblower's tools, pet rabbit, perfume vial";
+const sourceGoodItems = "arcane grimoire, rose flower, scroll of protection, immovable rod, bagpipes, delicious looking red apple, lyre, gold coins, glassblower's tools, pet rabbit, perfume vial, horn of valhala";
 const goodItemsArray = sourceGoodItems.split(", ");
-const sourceSillyItems = "bag of beans, juggling balls, donkey, pet bat, stuffed rat, collection of fungi, wooden knife, preserved spider leg, deffective orb, scroll of wasp summoning";
+const sourceSillyItems = "bag of beans, juggling balls, donkey, pet bat, stuffed rat, collection of fungi, wooden knife, preserved spider leg, deffective orb, scroll of wasp summoning, trumpet, broken knife, tea leaves";
 const sillyItemsArray = sourceSillyItems.split(", ");
 const itemsObject = {
     badItem: badItemsArray,
@@ -25,19 +24,23 @@ const itemsObject = {
     sillyItem: sillyItemsArray
 };
 
-const sourceBadVerbs = "kill, attack, hurt, inconvenience, throw at, impede, inconvenience, irritate, anihilate, scare";
+const sourceBadVerbs = "kill, attack, hurt, inconvenience, throw at, impede, inconvenience, irritate, anihilate, scare, stop, intimidate, destroy";
 const badVerbsArray = sourceBadVerbs.split(", ");
-const sourceGoodVerbs = "impress, seduce, court, entertain, offer to, bribe, distract, barter with, praise, flirt with";
+const sourceGoodVerbs = "impress, seduce, court, entertain, offer to, bribe, distract, barter with, praise, flirt with, rouse, motivate";
 const goodVerbsArray = sourceGoodVerbs.split(", ");
 const verbsObject = {
     badVerb: badVerbsArray,
     goodVerb: goodVerbsArray
 }
 
-//select words to use in sentence
-const location = locationsArray[randomNumber(locationsArray.length)];
+//select words to use in final sentence (NB place and creature are function too so when generateSentence runs on each button click they change too) 
+const selectPlace = () => {
+    return placesArray[randomNumber(placesArray.length)];
+};
 
-const creature = creaturesArray[randomNumber(creaturesArray.length)];
+const selectCreature = () => {
+    return creaturesArray[randomNumber(creaturesArray.length)];
+};
 
 const selectItem = () => {
     let item = "";
@@ -72,9 +75,10 @@ const selectVerb = () => {
 
 
 //function that builds the sentence
-
 const generateSentence = () => {
     let endResult = "";
+    let place = selectPlace();
+    let creature = selectCreature();
     let choosenItem = selectItem();
     let choosenVerb = selectVerb();
     if (choosenVerb[1] === "good" && choosenItem[1] !== "silly") {
@@ -86,10 +90,19 @@ const generateSentence = () => {
     } else {
         endResult = "Hmm, that might not have been a great idea, it looks like you made a fool of yourself"
     };
-    return `Hello traveller, you just arrived ${location}, were you meet ${creature}. You use your ${choosenItem[0]} to ${choosenVerb[0]} them. ${endResult}!`
+    return `Hello traveller, you just arrived ${place}, were you meet ${creature}. You use your ${choosenItem[0]} to ${choosenVerb[0]} them. ${endResult}!`
 };
 
-console.log(generateSentence());
 
+//Run function and log it to the console to check it
+//console.log(generateSentence());
 
+//link the sentence to the html button
+let phrase = document.getElementById('message');
+let button = document.querySelector('button');
 
+function buttonPush() {
+    phrase.innerHTML = generateSentence();
+};
+
+button.onclick = buttonPush;
