@@ -10,6 +10,15 @@ h1 {
     color: red;
 }
 
+@media only screen and (max-width: 600px) {
+    
+    h1 {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+}
+
 p {
     color: #07e800;
     font-size: 1.5em;
@@ -20,6 +29,14 @@ p {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    
+    .intro {
+        width: 90%;
+    }
+
 }
 
 .button {
@@ -40,4 +57,12 @@ button {
     margin-right: auto;
     padding: 1em;
     background-color: #0a0269;
+}
+
+@media only screen and (max-width: 600px) {
+    
+    .feature {
+        width: 80%;
+    }
+
 }
